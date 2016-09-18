@@ -1,11 +1,12 @@
-import React from 'react';
-import classNames from 'classnames';
+import { default as React, Component } from 'react';
+import { default as classNames } from 'classnames';
+import { CMap } from '../components/CMap';
 
-export class Home extends React.Component {
+export class Home extends Component {
   render() {
     return (
       <div className="Home">
-        <h1>Home</h1>
+        <CMap></CMap>
       </div>
     );
   }

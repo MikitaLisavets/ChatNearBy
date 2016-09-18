@@ -1,12 +1,12 @@
-import React from 'react';
-import { Header } from '../components/Header.jsx';
+import { default as React, Component } from 'react';
+import { CHeader } from '../components/CHeader';
 
-export class MainLayout extends React.Component {
+export class MainLayout extends Component {
   render() {
     return (
-      <div>
-        <Header />
-        <main>{this.props.children}</main>
+      <div className="page">
+        <CHeader />
+        <main className="page__content">{this.props.children}</main>
       </div>
     );
   }

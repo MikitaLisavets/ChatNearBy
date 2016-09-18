@@ -1,3 +1,6 @@
-body {
-  background: #f3f3f3;
-}
+@import "./styles/reset";
+@import "./styles/default";
+
+@import "../imports/ui/containers/MainLayout";
+@import "../imports/ui/components/CHeader";
+@import "../imports/ui/components/CMap";

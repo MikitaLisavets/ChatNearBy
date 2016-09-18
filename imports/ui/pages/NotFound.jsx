@@ -1,6 +1,6 @@
-import React from 'react';
+import { default as React, Component } from 'react';
 
-export class NotFound extends React.Component {
+export class NotFound extends Component {
   render() {
     return (
       <div className='NotFound'>
