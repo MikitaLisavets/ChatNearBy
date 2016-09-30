@@ -1,6 +1,7 @@
 import { default as React } from 'react';
 import { CHeader } from '/imports/ui/components/CHeader';
 import { CNotifications } from '/imports/ui/components/CNotifications';
+import { CLoader } from '/imports/ui/components/CLoader';
 import { Dispatcher } from '/imports/services/Dispatcher';
 
 export const App = React.createClass({
@@ -16,7 +17,7 @@ export const App = React.createClass({
   },
 
   componentDidMount() {
-    Dispatcher.subscribe('localeChanged', (locale) => {
+    Dispatcher.subscribe('locale.changed', (locale) => {
       this.setState({locale: locale});
     });
   },
@@ -24,8 +25,9 @@ export const App = React.createClass({
   render() {
     return (
       <div className="page">
-        <CNotifications />
-        <CHeader />
+        <CHeader/>
+        <CLoader/>
+        <CNotifications/>
         <main className="page__content">{this.props.children}</main>
       </div>
     );

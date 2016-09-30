@@ -15,12 +15,12 @@ export const CMap = React.createClass({
     successCurrentPosition: {
       message: I18n.translate('notification.successCurrentPosition'),
       level: 'success',
-      autoDismiss: 5,
+      autoDismiss: 4,
       uid: 'successCurrentPosition'
     },
     errorCurrentPosition: {
       level: 'error',
-      autoDismiss: 5,
+      autoDismiss: 4,
       uid: 'errorCurrentPosition'
     },
   },
@@ -29,10 +29,10 @@ export const CMap = React.createClass({
   getInitialState() {
     return {
       center: {
-        lat: 0,
-        lng: 0,
+        lat: +localStorage.getItem('lastLat') || 0,
+        lng: +localStorage.getItem('lastLng') || 0,
       },
-      zoom: 5
+      zoom: +localStorage.getItem('lastZoom') || 2,
     };
   },
 
@@ -41,12 +41,17 @@ export const CMap = React.createClass({
     navigator.geolocation.getCurrentPosition((position) => {
       Dispatcher.publish('notification.remove', this.notifications.getCurrentPosition);
       Dispatcher.publish('notification.add', this.notifications.successCurrentPosition);
+
+      localStorage.setItem('lastLat', position.coords.latitude);
+      localStorage.setItem('lastLng', position.coords.longitude);
+      localStorage.setItem('lastZoom', 14);
+
       this.setState({
         center: {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         },
-        zoom: 16,
+        zoom: 14,
         loaded: true
       });
     }, (error) => {
@@ -57,7 +62,6 @@ export const CMap = React.createClass({
   },
 
   onMapInit(map) {
-
   },
 
   render() {
@@ -77,6 +81,14 @@ export const CMap = React.createClass({
               ref={(map) => this.onMapInit(map)}
               zoom={this.state.zoom}
               center={{ lat: this.state.center.lat, lng: this.state.center.lng }}
+              defaultOptions={{
+                zoomControl: true,
+                mapTypeControl: false,
+                scaleControl: true,
+                streetViewControl: false,
+                rotateControl: true,
+                fullscreenControl: false
+              }}
             />
           }
          />

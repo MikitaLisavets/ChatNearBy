@@ -4,7 +4,7 @@ import { Dispatcher } from '/imports/services/Dispatcher';
 export const I18n = {
   locale: Utils.getLocale(),
   init() {
-    Dispatcher.subscribe('localeChanged', (locale) => {
+    Dispatcher.subscribe('locale.changed', (locale) => {
       this.locale = locale;
     });
   },

@@ -4,9 +4,11 @@ import { Utils } from '/imports/services/Utils';
 import { I18n } from '/imports/services/I18n';
 
 export const CHeader = React.createClass({
+
   changeLocale() {
     Utils.getLocale() === 'ru' ? Utils.setLocale('en') : Utils.setLocale('ru');
   },
+
   render() {
     return (
       <header className='header'>

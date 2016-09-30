@@ -7,7 +7,7 @@ export const Utils = {
 
   setLocale(locale) {
     localStorage.setItem('locale', locale);
-    Dispatcher.publish('localeChanged', locale);
+    Dispatcher.publish('locale.changed', locale);
   },
 
 }

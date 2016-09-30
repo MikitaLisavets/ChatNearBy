@@ -2,7 +2,7 @@ export const Dispatcher = {
   _subscribes: {},
   _visitSubscribers(action, type, arg) {
     var pubtype = type || 'any',
-      subscribes = this._subscribes[pubtype];
+      subscribes = this._subscribes[pubtype] || [];
 
     for (var i = 0, len = subscribes.length; i < len; i += 1) {
       switch (action) {
