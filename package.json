@@ -9,8 +9,10 @@
     "history": "^4.2.0",
     "meteor-node-stubs": "~0.2.0",
     "react": "^15.3.1",
+    "react-addons-css-transition-group": "^15.3.2",
     "react-dom": "^15.3.1",
-    "react-router": "^2.8.1",
-    "yandex-map-react": "^1.0.0-beta.11"
+    "react-google-maps": "^4.11.0",
+    "react-notification-system": "^0.2.10",
+    "react-router": "^2.8.1"
   }
 }

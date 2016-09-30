@@ -1,6 +1,7 @@
 .map {
   width: 100vw;
   height: 100vh;
+  position: relative;
   .ymaps-2-1-42-map-copyrights-promo,
   .ymaps-2-1-42-copyright {
     display: none !important;
@@ -12,6 +13,17 @@
     border-radius: 50%;
     background: blue;
     animation: marker 2s infinite linear;
+  }
+  &__status {
+    background: rgba(0, 0, 255, .5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    color: #fff;
+    z-index: 10;
+    text-align: center;
   }
 }
 

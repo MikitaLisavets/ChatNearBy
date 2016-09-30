@@ -1,21 +1,22 @@
 import { Meteor } from 'meteor/meteor';
-import React from 'react';
-import { Router, Route, browserHistory } from 'react-router';
-import ReactDOM from 'react-dom';
+import { default as React } from 'react';
+import { Router, Route, Redirect, browserHistory } from 'react-router';
+import { default as ReactDOM } from 'react-dom';
 import { createHistory, useBasename } from 'history';
 
-import { MainLayout } from '../imports/ui/containers/MainLayout';
-import { About } from '../imports/ui/pages/About';
-import { Home } from '../imports/ui/pages/Home';
-import { NotFound } from '../imports/ui/pages/NotFound';
+import { App } from '/imports/ui/containers/App';
+import { HomePage } from '/imports/ui/pages/HomePage';
+import { ChatPage } from '/imports/ui/pages/ChatPage';
+import { SettingsPage } from '/imports/ui/pages/SettingsPage';
 
 Meteor.startup(() => {
   ReactDOM.render(
     <Router history={browserHistory}>
-      <Route component={MainLayout}>
-        <Route path="/" component={Home}/>
-        <Route path="/about" component={About}/>
-        <Route path="*" component={NotFound}/>
+      <Route component={App}>
+        <Route path="/" component={HomePage}/>
+        <Route path="/chat/:id" component={ChatPage}/>
+        <Route path="/settings" component={SettingsPage}/>
+        <Redirect from="/*" to="/"/>
       </Route>
     </Router>,
     document.getElementById('app')

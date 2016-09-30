@@ -1,48 +1,86 @@
-import { default as React, Component } from 'react';
+import { default as React } from 'react';
 import { default as ReactDOM } from 'react-dom';
-import { Map, Marker, MarkerLayout } from 'yandex-map-react';
+import { GoogleMapLoader, GoogleMap, Marker, SearchBox } from 'react-google-maps';
+import { Dispatcher } from '/imports/services/Dispatcher';
+import { I18n } from '/imports/services/I18n';
 
-const mapState = {
-    controls: ['default']
-};
+export const CMap = React.createClass({
+  notifications: {
+    getCurrentPosition: {
+      message: I18n.translate('notification.getCurrentPosition'),
+      level: 'info',
+      autoDismiss: 0,
+      uid: 'getCurrentPosition'
+    },
+    successCurrentPosition: {
+      message: I18n.translate('notification.successCurrentPosition'),
+      level: 'success',
+      autoDismiss: 5,
+      uid: 'successCurrentPosition'
+    },
+    errorCurrentPosition: {
+      level: 'error',
+      autoDismiss: 5,
+      uid: 'errorCurrentPosition'
+    },
+  },
 
-const points = [
-    [55.737693, 37.723390],
-    [55.737693, 37.733390],
-    [55.744665, 37.491304],
-    [55.636063, 37.566835],
-    [55.865323, 37.599794],
-    [55.741567, 37.960969]
-];
 
-export class CMap extends Component {
-  onAPIAvailable() {
-    console.log('API loaded');
-  }
+  getInitialState() {
+    return {
+      center: {
+        lat: 0,
+        lng: 0,
+      },
+      zoom: 5
+    };
+  },
 
-  onMarkerClick() {
-    console.log('Marker clicked');
-  }
+  componentDidMount() {
+    Dispatcher.publish('notification.add', this.notifications.getCurrentPosition);
+    navigator.geolocation.getCurrentPosition((position) => {
+      Dispatcher.publish('notification.remove', this.notifications.getCurrentPosition);
+      Dispatcher.publish('notification.add', this.notifications.successCurrentPosition);
+      this.setState({
+        center: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        },
+        zoom: 16,
+        loaded: true
+      });
+    }, (error) => {
+      this.notifications.errorCurrentPosition.message = error.message;
+      Dispatcher.publish('notification.remove', this.notifications.getCurrentPosition);
+      Dispatcher.publish('notification.add', this.notifications.errorCurrentPosition);
+    });
+  },
+
+  onMapInit(map) {
+
+  },
 
   render() {
     return (
       <div className="map">
-        <Map onAPIAvailable={this.onAPIAvailable.bind(this)}
-          state={mapState}
-          width={'100%'}
-          height={'100%'}
-          center={[55.754734, 37.583314]}
-          zoom={10}>
-            {points.map(([lat, lon], i) =>  (
-              <Marker key={'marker_' + i} lat={lat} lon={lon} onClick={this.onMarkerClick.bind(this)}>
-                  <MarkerLayout>
-                      <div className="map__marker">
-                      </div>
-                  </MarkerLayout>
-              </Marker>
-            ))}
-          </Map>
-      </div>
+        <GoogleMapLoader
+          containerElement={
+            <div
+              {...this.props.containerElementProps}
+              style={{
+                height: `100%`,
+              }}
+            />
+          }
+          googleMapElement={
+            <GoogleMap
+              ref={(map) => this.onMapInit(map)}
+              zoom={this.state.zoom}
+              center={{ lat: this.state.center.lat, lng: this.state.center.lng }}
+            />
+          }
+         />
+     </div>
     );
   }
-}
+});
