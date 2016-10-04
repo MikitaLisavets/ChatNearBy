@@ -1,10 +1,21 @@
-import { default as React } from 'react';
+import { default as React, PropTypes } from 'react';
 import { default as ReactDOM } from 'react-dom';
+import { createContainer } from 'meteor/react-meteor-data';
 import { GoogleMapLoader, GoogleMap, Marker, SearchBox } from 'react-google-maps';
 import { Dispatcher } from '/imports/services/Dispatcher';
+import { CControls } from '/imports/ui/components/CControls';
 import { I18n } from '/imports/services/I18n';
+import { Chats } from '/imports/api/Chats';
 
-export const CMap = React.createClass({
+const CMap = React.createClass({
+  propTypes: {
+    chats: PropTypes.array.isRequired
+  },
+
+  contextTypes: {
+    router: PropTypes.object.isRequired
+  },
+
   notifications: {
     getCurrentPosition: {
       message: I18n.translate('notification.getCurrentPosition'),
@@ -15,12 +26,12 @@ export const CMap = React.createClass({
     successCurrentPosition: {
       message: I18n.translate('notification.successCurrentPosition'),
       level: 'success',
-      autoDismiss: 4,
+      autoDismiss: 3,
       uid: 'successCurrentPosition'
     },
     errorCurrentPosition: {
       level: 'error',
-      autoDismiss: 4,
+      autoDismiss: 3,
       uid: 'errorCurrentPosition'
     },
   },
@@ -37,6 +48,8 @@ export const CMap = React.createClass({
   },
 
   componentDidMount() {
+    this.refs.mapControls.setCoords(this.state.center.lat, this.state.center.lng);
+
     Dispatcher.publish('notification.add', this.notifications.getCurrentPosition);
     navigator.geolocation.getCurrentPosition((position) => {
       Dispatcher.publish('notification.remove', this.notifications.getCurrentPosition);
@@ -45,6 +58,8 @@ export const CMap = React.createClass({
       localStorage.setItem('lastLat', position.coords.latitude);
       localStorage.setItem('lastLng', position.coords.longitude);
       localStorage.setItem('lastZoom', 14);
+
+      this.refs.mapControls.setCoords(position.coords.latitude, position.coords.longitude);
 
       this.setState({
         center: {
@@ -62,6 +77,10 @@ export const CMap = React.createClass({
   },
 
   onMapInit(map) {
+  },
+
+  onMarkerClick(chat) {
+    this.context.router.push('/chat/' + chat._id);
   },
 
   render() {
@@ -92,10 +111,29 @@ export const CMap = React.createClass({
                 rotateControl: false,
                 fullscreenControl: false
               }}>
+              {this.props.chats.map((chat, index) => (
+                <Marker
+                  key={index}
+                  title={chat.title}
+                  position={{
+                    lat: chat.lat,
+                    lng: chat.lng
+                  }}
+                  onClick={() => this.onMarkerClick(chat)}
+                />
+              ))}
             </GoogleMap>
           }
          />
+       <CControls ref="mapControls"/>
      </div>
     );
   }
 });
+
+export default createContainer(() => {
+  Meteor.subscribe('chats');
+  return {
+    chats: Chats.find({}).fetch()
+  };
+}, CMap);
