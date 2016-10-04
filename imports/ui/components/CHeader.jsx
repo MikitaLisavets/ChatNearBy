@@ -2,12 +2,9 @@ import { default as React } from 'react';
 import { Link } from 'react-router';
 import { Utils } from '/imports/services/Utils';
 import { I18n } from '/imports/services/I18n';
+import { CAuth } from '/imports/ui/components/CAuth';
 
 export const CHeader = React.createClass({
-
-  changeLocale() {
-    Utils.getLocale() === 'ru' ? Utils.setLocale('en') : Utils.setLocale('ru');
-  },
 
   render() {
     return (
@@ -18,9 +15,8 @@ export const CHeader = React.createClass({
         <Link to="/">Home</Link> &nbsp;
         <Link to="/chat/1">Chat Page</Link> &nbsp;
         <Link to="/settings">Not Found Page</Link> &nbsp;
-        <button onClick={this.changeLocale}>
-          {I18n.translate('header.changeLang')}
-        </button>
+        <br/>
+        <CAuth/>
       </header>
     );
   }

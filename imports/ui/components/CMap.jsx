@@ -83,13 +83,16 @@ export const CMap = React.createClass({
               center={{ lat: this.state.center.lat, lng: this.state.center.lng }}
               defaultOptions={{
                 zoomControl: true,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.LEFT_CENTER
+                },
                 mapTypeControl: false,
-                scaleControl: true,
+                scaleControl: false,
                 streetViewControl: false,
-                rotateControl: true,
+                rotateControl: false,
                 fullscreenControl: false
-              }}
-            />
+              }}>
+            </GoogleMap>
           }
          />
      </div>
