@@ -6,7 +6,7 @@ export const HomePage = React.createClass({
 
   render() {
     return (
-      <div className="Home">
+      <div className="home-page">
         <CMap></CMap>
       </div>
     );

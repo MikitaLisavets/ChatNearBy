@@ -4,6 +4,12 @@ import { Dispatcher } from '/imports/services/Dispatcher';
 
 export const CControls = React.createClass({
 
+  getInitialState() {
+    return {
+      user: Meteor.user()
+    }
+  },
+
   handleControl() {
     var title =  prompt('Please set title for chat', '') || '';
 
@@ -26,16 +32,20 @@ export const CControls = React.createClass({
     })
   },
 
+  componentDidMount() {
+    Dispatcher.subscribe('login', (user) => {
+      this.setState({user: user});
+    });
+    Dispatcher.subscribe('logout', () => {
+      this.setState({user: null});
+    });
+  },
+
   render() {
-    if (Meteor.userId()) {
-      return (
-        <div className="home-controls" onClick={this.handleControl}>
-        </div>
-      );
-    } else {
-      return (
-        <span />
-      );
-    }
+    return (
+      this.state.user ?
+      <div className="home-controls" onClick={this.handleControl}></div>
+      : <span />
+    );
   }
 });

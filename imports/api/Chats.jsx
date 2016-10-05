@@ -18,7 +18,16 @@ Meteor.methods({
       lat: param.lat,
       lng: param.lng,
       createdAt: new Date(),
-      owner: this.userId
+      owner: this.userId,
+      history: []
+    });
+  },
+
+  'chats.update'(param) {
+    Chats.update({ _id: param.chatId }, {
+      $set: {
+        history: param.history
+      }
     });
   },
 
