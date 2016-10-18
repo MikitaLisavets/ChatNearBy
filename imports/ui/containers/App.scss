@@ -1,0 +1,8 @@
+.page {
+  position: relative;
+  padding-top: 50px;
+  height: 100vh;
+  &__content {
+    height: 100%;
+  }
+}

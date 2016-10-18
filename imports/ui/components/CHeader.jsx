@@ -10,13 +10,9 @@ export const CHeader = React.createClass({
     return (
       <header className='header'>
         <Link to="/" className="header__logo">ChatNearby</Link>
-        <div></div>
-        <b>Header</b> &nbsp;
-        <Link to="/">Home</Link> &nbsp;
-        <Link to="/chat/1">Chat Page</Link> &nbsp;
-        <Link to="/settings">Not Found Page</Link> &nbsp;
-        <br/>
-        <CAuth/>
+        <div className="header__auth">
+          <CAuth/>
+        </div>
       </header>
     );
   }

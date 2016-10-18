@@ -6,7 +6,7 @@ export const HomePage = React.createClass({
 
   render() {
     return (
-      <div className="home-page">
+      <div className="home-page" style={{height: '100%'}}>
         <CMap></CMap>
       </div>
     );

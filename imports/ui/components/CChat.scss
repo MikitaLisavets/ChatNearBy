@@ -1,10 +1,10 @@
 .chat {
-  width: 960px;
+  max-width: 960px;
+  width: 100%;
   margin: auto;
-  padding: 20px;
+  padding: 0 20px;
   background: purple;
-  margin-top: 50px;
-  height: 500px;
+  height: 100%;
   position: relative;
 }
 
@@ -17,11 +17,49 @@
   background: rgba(255, 0, 0, .3);
   overflow-y: auto;
   overflow-x: hidden;
+  &__row {
+    overflow: hidden;
+  }
   &__item {
     padding: 20px;
-    background: #fff;
-    border-radius: 20px;
     margin: 10px;
+    float: left;
+    position: relative;
+    .chat-area__message {
+      background: aqua;
+    }
+    .chat-area__top {
+      left: 0;
+    }
+    .chat-area__author {
+      margin-right: 10px;
+    }
+    &_self {
+      float: right;
+      .chat-area__message {
+        background: #fff;
+      }
+      .chat-area__top {
+        right: 0;
+        text-align: right;
+      }
+      .chat-area__author {
+        margin-left: 10px;
+      }
+    }
+  }
+  &__top {
+    position: absolute;
+    top: 0;
+    padding: 0 20px;
+    white-space: nowrap;
+  }
+  &__message {
+    border-radius: 20px;
+    padding: 20px;
+  }
+  &__author {
+    display: inline-block;
   }
 }
 

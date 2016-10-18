@@ -1,39 +1,40 @@
 .map {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: relative;
-  .ymaps-2-1-42-map-copyrights-promo,
-  .ymaps-2-1-42-copyright {
-    display: none !important;
+  &__inner {
+    height: 100%;
   }
-  &__marker {
-    width: 40px;
-    height: 40px;
-    overflow: hidden;
-    border-radius: 50%;
-    background: blue;
-    animation: marker 2s infinite linear;
-  }
-  &__status {
-    background: rgba(0, 0, 255, .5);
+  &__current {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px;
+    bottom: 40px;
+    right: 20px;
+    background: blue;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     color: #fff;
-    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
     text-align: center;
   }
-}
-
-@keyframes marker {
-  0% {
-    opacity: 1;
-    transform: scale(.5);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.2);
+  &__add {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    background: red;
+    width: 100%;
+    max-width: 140px;
+    height: 50px;
+    border-radius: 20px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    text-align: center;
+    transform: translate(-50%, 0);
   }
 }

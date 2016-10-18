@@ -11,7 +11,7 @@ Accounts.ui.config({
 });
 
 Accounts.onLogin(function(user){
-  Dispatcher.publish('login', Meteor.user());
+  Dispatcher.publish('login');
 });
 
 Accounts.onLogout(function(){

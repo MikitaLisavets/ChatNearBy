@@ -1,13 +1,16 @@
 import { Meteor } from 'meteor/meteor';
 import { Chats } from '/imports/api/Chats';
 
-var chatLiveLimit = 24 * 60 * 60 * 1000,
-    checkTime = 60 * 1000;
+let chatLiveLimit = 24 * 60 * 60 * 1000, // 24h
+    checkTime = 60 * 1000; // 1m
 
-// Meteor.setInterval(()=> {
-//   Chats.find().map( function(chat) {
-//     if(chat.createdAt.getTime() + chatLiveLimit <= new Date()) {
-//       Chats.remove(chat._id);
-//     }
-//   });
-// }, checkTime)
+let checkAvailability = function() {
+  Chats.find().map( function(chat) {
+    if(chat.updatedAt && new Date() > chat.updatedAt.getTime() + chatLiveLimit) {
+      Chats.remove(chat._id);
+    }
+  });
+};
+
+checkAvailability();
+Meteor.setInterval(checkAvailability, checkTime)
