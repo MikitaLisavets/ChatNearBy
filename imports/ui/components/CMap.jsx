@@ -161,9 +161,15 @@ const CMap = React.createClass({
           googleMapElement={this.renderMap()}
          />
        <div className="map__current"
-         onClick={this.showLocation}>Current Location</div>
+         onClick={this.showLocation}>
+         <i className="fa fa-map" aria-hidden="true"></i>
+       </div>
        { this.props.user ?
-         <div className="map__add" onClick={this.addNewChat}>Add</div>
+         <div className="map__add" onClick={this.addNewChat}>
+          <span></span>
+           <i className="fa fa-map-marker" aria-hidden="true"></i>&nbsp;
+           Add Chat
+         </div>
          : ''
        }
      </div>
