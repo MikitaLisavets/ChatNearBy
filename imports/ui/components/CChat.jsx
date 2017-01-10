@@ -31,7 +31,18 @@ const CChat = React.createClass({
       chatId: this.props.chat._id,
       history: history,
       updatedAt: now
+    }, () => {
+      this.cleanTextarea();
+      this.updateScrollArea();
     });
+  },
+
+  cleanTextarea() {
+    this.refs.textarea ? this.refs.textarea.value = '' : '';
+  },
+
+  updateScrollArea() {
+    this.refs.area ? this.refs.area.scrollTop = this.refs.area.scrollHeight : '';
   },
 
   renderChat() {
@@ -68,7 +79,7 @@ const CChat = React.createClass({
     return (
       <form className="chat-form" onSubmit={this.submitHandler}>
         <textarea className="chat-form__textarea" ref="textarea"></textarea>
-        <button className="chat-form__submit" type="submit"></button>
+        <button className="chat-form__submit" type="submit">Send</button>
       </form>
     );
   },
@@ -102,6 +113,7 @@ const CChat = React.createClass({
               currentLng: data.coords.longitude
             })
           }
+          this.updateScrollArea();
           Dispatcher.publish('loader.hide');
         });
       }
@@ -111,7 +123,7 @@ const CChat = React.createClass({
   render() {
     return (
       <div className="chat">
-        <div className="chat-area">
+        <div className="chat-area" ref="area">
           {this.renderChat()}
         </div>
         {this.renderForm()}
