@@ -12,6 +12,7 @@
   justify-content: space-between;
   padding: 10px 20px;
   &__auth {
+    font-size: 14px;
     .login-close-text {
       float: right !important;
     }
@@ -26,6 +27,17 @@
     display: inline-block;
     width: 20px;
     height: 20px;
-    background: #000;
+    background: #5555aa;
+    position: relative;
+    &:after {
+      content: '';
+      width: 15px;
+      height: 15px;
+      background: inherit;
+      bottom: 50%;
+      right: 50%;
+      position: absolute;
+      transform: rotate(45deg);
+    }
   }
 }
